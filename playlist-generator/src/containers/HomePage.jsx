@@ -3,7 +3,7 @@ import React, { useCallback, useContext, useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import { spotifyAppContext } from '../utils/Context';
 import '../styles/HomePage.scss';
-import { UserComp, Artist } from '../components';
+import { UserComp, Artist, Features } from '../components';
 
 export const HomePage = () => {
 // create a state to hold all recommendation info in object form
@@ -15,7 +15,9 @@ export const HomePage = () => {
     const context = useContext(spotifyAppContext);
     const { user, token } = context;
     const [artist, setArtist] = useState('');
-    const [features, setFeatures] = useState([]);
+    const [energy, setEnergy] = useState(0);
+    const [dance, setDance] = useState(0);
+    const [acoustic, setAcoustic] = useState(0);
     const [playTime, setTime] = useState(0);
     // create a separate state for each component I am going to add
 
@@ -48,7 +50,22 @@ export const HomePage = () => {
             // });
             setArtist(personId);
         });
+
+        return response;
     };
+
+    const getEnergy = (value) => {
+        setEnergy(value);
+    };
+
+    const getDance = (value) => {
+        setDance(value);
+    };
+
+    const getAcoustic = (value) => {
+        setAcoustic(value);
+    };
+
     const onCreatePlaylistClick = useCallback(() => {
         // eslint-disable-next-line no-alert
         alert('Todo');
@@ -58,6 +75,9 @@ export const HomePage = () => {
         <div className="home-page">
             <UserComp user={user} />
             <Artist callback={getArtist} />
+            <Features type="Energy" callback={getEnergy} />
+            <Features type="Dance" callback={getDance} />
+            <Features type="Acoustic" callback={getAcoustic} />
             <button
                 className="button"
                 type="button"
