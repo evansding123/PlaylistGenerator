@@ -2,7 +2,7 @@ import React, { useCallback, useContext, useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import { spotifyAppContext } from '../utils/Context';
 import '../styles/HomePage.scss';
-import { UserComp } from '../components';
+import { UserComp, Artist } from '../components';
 
 export const HomePage = () => {
 // create a state to hold all recommendation info in object form
@@ -23,6 +23,8 @@ export const HomePage = () => {
     }
 
     const onCreatePlaylistClick = useCallback(() => {
+        // eslint-disable-next-line no-console
+        console.log(info);
         // eslint-disable-next-line no-alert
         alert('Todo');
     }, []);
@@ -30,6 +32,7 @@ export const HomePage = () => {
     return (
         <div className="home-page">
             <UserComp user={user} />
+            <Artist />
             <button
                 className="button"
                 type="button"
