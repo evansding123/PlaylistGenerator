@@ -3,7 +3,10 @@ import React, { useCallback, useContext, useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import { spotifyAppContext } from '../utils/Context';
 import '../styles/HomePage.scss';
-import { UserComp, Artist, Features } from '../components';
+import
+{
+    UserComp, Artist, Features, PlaylistLength,
+} from '../components';
 
 export const HomePage = () => {
 // create a state to hold all recommendation info in object form
@@ -42,12 +45,6 @@ export const HomePage = () => {
         });
         response.json().then((data) => {
             const personId = data.artists.items[0].id;
-            // setInfo((prevState) => {
-            //     return ({
-            //         ...prevState,
-            //         ids: items,
-            //     });
-            // });
             setArtist(personId);
         });
 
@@ -66,6 +63,10 @@ export const HomePage = () => {
         setAcoustic(value);
     };
 
+    const getTime = (value) => {
+        setTime(value);
+    };
+
     const onCreatePlaylistClick = useCallback(() => {
         // eslint-disable-next-line no-alert
         alert('Todo');
@@ -78,6 +79,7 @@ export const HomePage = () => {
             <Features type="Energy" callback={getEnergy} />
             <Features type="Dance" callback={getDance} />
             <Features type="Acoustic" callback={getAcoustic} />
+            <PlaylistLength callback={getTime} />
             <button
                 className="button"
                 type="button"
