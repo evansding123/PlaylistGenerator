@@ -22,7 +22,8 @@ export const HomePage = () => {
     const [energy, setEnergy] = useState(0);
     const [dance, setDance] = useState(0);
     const [acoustic, setAcoustic] = useState(0);
-    const [playTime, setTime] = useState(0);
+    const [playTime, setTime] = useState('60');
+    const [playListTracks, setTracks] = useState([]);
     // create a separate state for each component I am going to add
 
     if (!user || !token) {
@@ -33,7 +34,7 @@ export const HomePage = () => {
     }
 
     const getArtist = async (artistName) => {
-        // convert the text into query string
+        // convert the text into query string to receive json object from spotify api. parse info into state
         const splitted = artistName.split(' ');
         const name = splitted.join('%20');
         const url = `https://api.spotify.com/v1/search?q=${name}&type=artist&limit=1`;
@@ -70,8 +71,7 @@ export const HomePage = () => {
 
     const onCreatePlaylistClick = useCallback(async () => {
         const seed = artist;
-        const playListLimit = Math.ceil(Number(playTime) / 3);
-        console.log(playListLimit, playTime);
+        const playListLimit = playTime >= 30 ? Math.ceil(Number(playTime) / 3) : 10;
         const url = `https://api.spotify.com/v1/recommendations?limit=${playListLimit}&seed_artists=${seed}&target_acousticness=${acoustic}&target_danceability=${dance}&target_energy=${energy}`;
 
         const response = await fetch(url, {
@@ -83,7 +83,8 @@ export const HomePage = () => {
         });
         response.json().then((data) => {
             // eslint-disable-next-line no-console
-            console.log(data);
+            console.log(data.tracks);
+            setTracks(data.tracks);
         });
     }, [artist, playTime, acoustic, dance, energy]);
 
@@ -102,6 +103,13 @@ export const HomePage = () => {
             >
                 Create Playlist
             </button>
+            <div>
+                {/* if we get recommendations in state then this become true, rendering the playlist */}
+                {playListTracks.length > 0 && playListTracks.map((item, index) => {
+                    // probably need to make a separate component for each track
+                    return <div>{item.name}</div>;
+                })}
+            </div>
         </div>
     );
 };
