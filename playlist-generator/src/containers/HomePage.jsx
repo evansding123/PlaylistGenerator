@@ -46,7 +46,7 @@ export const HomePage = () => {
             },
         });
         response.json().then((data) => {
-            const personId = data.artists.items[0].id;
+            const personId = data.artists !== undefined ? data.artists.items[0].id : '';
             setArtist(personId);
         });
 
@@ -103,9 +103,10 @@ export const HomePage = () => {
             >
                 Create Playlist
             </button>
+            <div>{playListTracks === undefined && 'PLEASE CHOOSE ARTIST'}</div>
             <div className="playlist">
                 {/* if we get recommendations in state then this become true, rendering the playlist */}
-                {playListTracks.length > 0 && playListTracks.map((item) => {
+                {playListTracks !== undefined && playListTracks.length > 0 && playListTracks.map((item) => {
                     // probably need to make a separate component for each track
                     return <Tracks description={item} key={item.id} />;
                 })}
