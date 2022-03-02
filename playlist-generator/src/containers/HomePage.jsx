@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable no-unused-vars */
 import React, { useCallback, useContext, useState } from 'react';
 import { Redirect } from 'react-router-dom';
@@ -67,10 +68,24 @@ export const HomePage = () => {
         setTime(value);
     };
 
-    const onCreatePlaylistClick = useCallback(() => {
-        // eslint-disable-next-line no-alert
-        alert('Todo');
-    }, []);
+    const onCreatePlaylistClick = useCallback(async () => {
+        const seed = artist;
+        const playListLimit = Math.ceil(Number(playTime) / 3);
+        console.log(playListLimit, playTime);
+        const url = `https://api.spotify.com/v1/recommendations?limit=${playListLimit}&seed_artists=${seed}&target_acousticness=${acoustic}&target_danceability=${dance}&target_energy=${energy}`;
+
+        const response = await fetch(url, {
+            headers: {
+                Accept: 'application/json',
+                Authorization: `Bearer ${token}`,
+                'Content-Type': 'application/json',
+            },
+        });
+        response.json().then((data) => {
+            // eslint-disable-next-line no-console
+            console.log(data);
+        });
+    }, [artist, playTime, acoustic, dance, energy]);
 
     return (
         <div className="home-page">
