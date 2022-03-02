@@ -13,13 +13,13 @@
             border-radius: 50%;
             box-shadow: 1px 1px 15px 0px rgba(0, 0, 0, 0.3);
         }
-    
+
         .user-name {
             font-size: 30px;
             margin-bottom: 20px;
             max-width: 500px;
             text-align: center;
-        }    
+        }
     }
 
     .button {
@@ -34,5 +34,18 @@
         cursor: pointer;
         text-align: center;
         font-weight: bold;
+    }
+    .tracks {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .trackInfo {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        align-items: flex-start;
+
+
     }
 }

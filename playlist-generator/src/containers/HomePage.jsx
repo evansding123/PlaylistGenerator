@@ -6,7 +6,7 @@ import { spotifyAppContext } from '../utils/Context';
 import '../styles/HomePage.scss';
 import
 {
-    UserComp, Artist, Features, PlaylistLength,
+    UserComp, Artist, Features, PlaylistLength, Tracks,
 } from '../components';
 
 export const HomePage = () => {
@@ -103,11 +103,11 @@ export const HomePage = () => {
             >
                 Create Playlist
             </button>
-            <div>
+            <div className="playlist">
                 {/* if we get recommendations in state then this become true, rendering the playlist */}
-                {playListTracks.length > 0 && playListTracks.map((item, index) => {
+                {playListTracks.length > 0 && playListTracks.map((item) => {
                     // probably need to make a separate component for each track
-                    return <div>{item.name}</div>;
+                    return <Tracks description={item} key={item.id} />;
                 })}
             </div>
         </div>
