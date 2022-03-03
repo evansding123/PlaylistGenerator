@@ -88,22 +88,48 @@ export const HomePage = () => {
         });
     }, [artist, playTime, acoustic, dance, energy]);
 
+    const savePlaylistClick = useCallback(async () => {
+
+    }, []);
+
     return (
         <div className="home-page">
-            <UserComp user={user} />
-            <Artist callback={getArtist} />
-            <Features type="Energy" callback={getEnergy} />
-            <Features type="Dance" callback={getDance} />
-            <Features type="Acoustic" callback={getAcoustic} />
-            <PlaylistLength callback={getTime} />
-            <button
-                className="button"
-                type="button"
-                onClick={onCreatePlaylistClick}
-            >
-                Create Playlist
-            </button>
-            <div>{playListTracks === undefined && 'PLEASE CHOOSE ARTIST'}</div>
+            <div className="inputs">
+                <UserComp user={user} />
+                <Artist callback={getArtist} />
+                <Features type="Energy" callback={getEnergy} />
+                <Features type="Dance" callback={getDance} />
+                <Features type="Acoustic" callback={getAcoustic} />
+                <PlaylistLength callback={getTime} />
+                <button
+                    className="button"
+                    type="button"
+                    onClick={onCreatePlaylistClick}
+                >
+                    Create Playlist
+                </button>
+                {/* if we get recommendations in state then this become true, giving us an option to save the playlist */}
+                {
+                    playListTracks !== undefined && playListTracks.length > 0
+                    && (
+                        <>
+                            <label htmlFor="playlistName">
+                                Enter Playlist Name
+                                <input type="text" />
+                            </label>
+                            <button
+                                className="button"
+                                type="button"
+                                onClick={savePlaylistClick}
+                            >
+                                Save Playlist
+                            </button>
+                        </>
+                    )
+                }
+
+                <div>{playListTracks === undefined && 'PLEASE CHOOSE ARTIST'}</div>
+            </div>
             <div className="playlist">
                 {/* if we get recommendations in state then this become true, rendering the playlist */}
                 {playListTracks !== undefined && playListTracks.length > 0 && playListTracks.map((item) => {

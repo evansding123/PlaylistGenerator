@@ -19,11 +19,11 @@ export const Tracks = (props) => {
 
     return (
         <div className="tracks">
-            <img src={album.images[0].url} alt="thumbnail" width={100} height={100} />
+            <img className="thumbnail" src={album.images[0].url} alt="thumbnail" />
             <div className="trackInfo">
-                <div>{description.name}</div>
+                <div className="Name">{description.name}</div>
                 <div>{description.artists[0].name}</div>
-                <div>{album.name}</div>
+                <div className="Name">{album.name}</div>
                 <div>{formatTime}</div>
                 <div>{album.release_date}</div>
             </div>

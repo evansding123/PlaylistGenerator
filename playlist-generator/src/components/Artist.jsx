@@ -20,7 +20,7 @@ export const Artist = (props) => {
                     Enter Artist Name
                     <input type="text" value={input} onChange={handleChange} />
                 </label>
-                <input type="submit" value="Submit" />
+                <input type="submit" value="Enter" />
             </form>
         </div>
     );

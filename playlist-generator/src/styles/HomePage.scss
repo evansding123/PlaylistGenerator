@@ -1,8 +1,16 @@
 
 .home-page {
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    flex-direction: row;
+    align-items: flex-start;
+
+    .inputs {
+        margin-left: 0;
+        margin-right: 5%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
 
     .user-info {
         .user-image {
@@ -35,17 +43,47 @@
         text-align: center;
         font-weight: bold;
     }
-    .tracks {
-        display: flex;
-        flex-direction: row;
-    }
 
-    .trackInfo {
+    .playlist {
         display: flex;
         flex-direction: column;
         flex-wrap: wrap;
-        align-items: flex-start;
+        margin-left: 0;
+        margin-right: 0;
+        height: 70em;
+        width: 30em;
+    }
+
+    .tracks {
+        display: flex;
+        flex-direction: row;
+        width: 50%;
+        height: 7%;
+        border-style: solid;
+        border-radius: 20px;
+        border-color:#1ed660;
+        color: white;
+        background-color: gray;
+        overflow: hide;
+
+        .trackInfo {
+            display: flex;
+            flex-direction: column;
+            flex-wrap: wrap;
+            align-items: flex-start;
+            font-size: 12px;
+            .Name {
+                flex-basis: 20%;
+                overflow: hidden;
+            }
+        }
+    }
 
 
+
+    .thumbnail {
+        width: 75px;
+        height: 75px;
+        border-radius: 50px;
     }
 }
