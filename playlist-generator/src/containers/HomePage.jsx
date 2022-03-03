@@ -6,7 +6,7 @@ import { spotifyAppContext } from '../utils/Context';
 import '../styles/HomePage.scss';
 import
 {
-    UserComp, Artist, Features, PlaylistLength, Tracks,
+    UserComp, Artist, Features, PlaylistLength, Tracks, SavePlaylist,
 } from '../components';
 
 export const HomePage = () => {
@@ -18,13 +18,16 @@ export const HomePage = () => {
 
     const context = useContext(spotifyAppContext);
     const { user, token } = context;
-    const [artist, setArtist] = useState('');
+
     const [energy, setEnergy] = useState(0);
     const [dance, setDance] = useState(0);
     const [acoustic, setAcoustic] = useState(0);
     const [playTime, setTime] = useState('60');
-    const [playListTracks, setTracks] = useState([]);
-    // create a separate state for each component I am going to add
+
+    // hooks to handle async state
+    const [artist, setArtist] = useState('');
+    const [playlistTracks, setTracks] = useState([]);
+    const [saved, setSaved] = useState(false);
 
     if (!user || !token) {
         // User is NOT logged in, take the user to the login page
@@ -88,15 +91,52 @@ export const HomePage = () => {
         });
     }, [artist, playTime, acoustic, dance, energy]);
 
-    const savePlaylistClick = useCallback(async () => {
+    const savePlaylistClick = async (playlistName, playlistDescription) => {
+        // get list of track uris to add to playlist
 
-    }, []);
+        const url = `https://api.spotify.com/v1/users/${user.id}/playlists`;
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                Authorization: `Bearer ${token}`,
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                name: playlistName,
+                description: playlistDescription,
+                public: false,
+            }),
+        });
+        response.json().then(async (data) => {
+            // use the id generated from creating playlist to add items to it
+            const listURIs = playlistTracks.map((item) => {
+                return item.uri;
+            });
+            const url2 = `https://api.spotify.com/v1/playlists/${data.id}/tracks`;
+            const response2 = await fetch(url2, {
+                method: 'POST',
+                headers: {
+                    Accept: 'application/json',
+                    Authorization: `Bearer ${token}`,
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    uris: listURIs,
+                }),
+            });
+            response2.json().then((data2) => {
+                console.log(data, data2);
+                setSaved(true);
+            });
+        });
+    };
 
     return (
         <div className="home-page">
             <div className="inputs">
                 <UserComp user={user} />
-                <Artist callback={getArtist} />
+                <Artist form="Enter Artist Name" callback={getArtist} />
                 <Features type="Energy" callback={getEnergy} />
                 <Features type="Dance" callback={getDance} />
                 <Features type="Acoustic" callback={getAcoustic} />
@@ -110,30 +150,19 @@ export const HomePage = () => {
                 </button>
                 {/* if we get recommendations in state then this become true, giving us an option to save the playlist */}
                 {
-                    playListTracks !== undefined && playListTracks.length > 0
+                    playlistTracks !== undefined && playlistTracks.length > 0
                     && (
                         <>
-                            <label htmlFor="playlistName">
-                                Enter Playlist Name
-                                <input type="text" />
-                            </label>
-                            <button
-                                className="button"
-                                type="button"
-                                onClick={savePlaylistClick}
-                            >
-                                Save Playlist
-                            </button>
+                            <SavePlaylist callback={savePlaylistClick} />
                         </>
                     )
                 }
 
-                <div>{playListTracks === undefined && 'PLEASE CHOOSE ARTIST'}</div>
+                <div>{playlistTracks === undefined && 'PLEASE CHOOSE ARTIST'}</div>
             </div>
             <div className="playlist">
                 {/* if we get recommendations in state then this become true, rendering the playlist */}
-                {playListTracks !== undefined && playListTracks.length > 0 && playListTracks.map((item) => {
-                    // probably need to make a separate component for each track
+                {playlistTracks !== undefined && playlistTracks.length > 0 && playlistTracks.map((item) => {
                     return <Tracks description={item} key={item.id} />;
                 })}
             </div>
