@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 
 export const SavePlaylist = (props) => {
-    const { form } = props;
+    const { form, saved } = props;
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
 
@@ -21,17 +21,12 @@ export const SavePlaylist = (props) => {
     };
 
     return (
-        <div>
-            <form>
+        <div className="savePlaylist">
+            <form className="spform">
                 <input type="text" value={name} onChange={handleChange} placeholder="Enter Playlist Name" />
                 <input type="text" value={description} onChange={handleChange} placeholder="Enter Description" />
-                <button
-                    className="button"
-                    type="button"
-                    onClick={handleSubmit}
-                >
-                    Save Playlist
-                </button>
+                {!saved && <button className="button" type="button" onClick={handleSubmit}>Save Playlist</button>}
+                {saved && <button className="button" type="button">Saved</button>}
             </form>
         </div>
     );

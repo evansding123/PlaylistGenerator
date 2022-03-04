@@ -6,7 +6,7 @@
 
     .inputs {
         margin-left: 0;
-        margin-right: 5%;
+        margin-right: 8%;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -44,6 +44,39 @@
         font-weight: bold;
     }
 
+    .artist {
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+
+        .smallButton {
+            margin: 10px;
+            font-size: 15px;
+            border-radius: 20px;
+            background-color: #1ed660;
+            color: #ffffff;
+            padding: 5px 10px;
+            border: none;
+            min-width: 30px;
+            //max-width: 40px;
+            cursor: pointer;
+            text-align: center;
+            font-weight: bold;
+        }
+
+    }
+
+    .playlistLength {
+        display: flex;
+        margin-top: 10px;
+    }
+
+
+
+
+
     .playlist {
         display: flex;
         flex-direction: column;
@@ -77,6 +110,25 @@
                 overflow: hidden;
             }
         }
+    }
+
+    .savePlaylist {
+        border-style: solid;
+        background-color: grey;
+        padding: 10px;
+        border-radius: 25px;
+        margin-top: 10%;
+
+        .spform {
+            display: flex;
+            flex-direction: column;
+            input {
+                margin-top: 20px;
+                border-radius: 20px;
+            }
+        }
+
+
     }
 
 

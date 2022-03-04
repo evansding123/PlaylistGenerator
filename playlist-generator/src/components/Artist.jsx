@@ -4,9 +4,11 @@ export const Artist = (props) => {
     const { form } = props;
     const [input, setInput] = useState('');
     const [presented, setPresent] = useState('');
+
     const handleChange = (event) => {
         setInput(event.target.value);
     };
+
     const handleSubmit = (event) => {
         // not using useeffect here because there would be too many requests - we would be sending a request to spotify every keystroke
         props.callback(input);
@@ -14,17 +16,23 @@ export const Artist = (props) => {
         event.preventDefault();
     };
     // can be a resusable component if there are other single forms to fill out
-    let currentRec = '';
+    let currentRec = 'Current Seed Artist: ';
     if (presented !== '' && form === 'Enter Artist Name') {
-        currentRec = `Getting recommendations for ${presented}`;
+        currentRec = `Current Seed Artist: ${presented}`;
     }
     // const currentName = presented === '' ? '...' : presented;
     return (
-        <div>
-            {currentRec}
+        <div className="artist">
+            <span>{currentRec}</span>
             <form onSubmit={handleSubmit}>
                 <input type="text" value={input} onChange={handleChange} placeholder={form} />
-                <input type="submit" value="Enter" />
+                <button
+                    className="smallButton"
+                    type="button"
+                    onClick={handleSubmit}
+                >
+                    Choose
+                </button>
             </form>
         </div>
     );

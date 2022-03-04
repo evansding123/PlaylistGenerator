@@ -1,6 +1,8 @@
 /* eslint-disable no-console */
 /* eslint-disable no-unused-vars */
-import React, { useCallback, useContext, useState } from 'react';
+import React, {
+    useCallback, useContext, useState, useEffect,
+} from 'react';
 import { Redirect } from 'react-router-dom';
 import { spotifyAppContext } from '../utils/Context';
 import '../styles/HomePage.scss';
@@ -35,6 +37,12 @@ export const HomePage = () => {
             <Redirect to="/login" />
         );
     }
+
+    useEffect(() => {
+        setTimeout(() => {
+            setSaved(false);
+        }, 3000);
+    }, [saved]);
 
     const getArtist = async (artistName) => {
         // convert the text into query string to receive json object from spotify api. parse info into state
@@ -92,8 +100,6 @@ export const HomePage = () => {
     }, [artist, playTime, acoustic, dance, energy]);
 
     const savePlaylistClick = async (playlistName, playlistDescription) => {
-        // get list of track uris to add to playlist
-
         const url = `https://api.spotify.com/v1/users/${user.id}/playlists`;
         const response = await fetch(url, {
             method: 'POST',
@@ -110,6 +116,7 @@ export const HomePage = () => {
         });
         response.json().then(async (data) => {
             // use the id generated from creating playlist to add items to it
+            // get list of track uris to add to playlist
             const listURIs = playlistTracks.map((item) => {
                 return item.uri;
             });
@@ -128,6 +135,8 @@ export const HomePage = () => {
             response2.json().then((data2) => {
                 console.log(data, data2);
                 setSaved(true);
+                // eslint-disable-next-line no-alert
+                alert('saved!');
             });
         });
     };
@@ -153,7 +162,7 @@ export const HomePage = () => {
                     playlistTracks !== undefined && playlistTracks.length > 0
                     && (
                         <>
-                            <SavePlaylist callback={savePlaylistClick} />
+                            <SavePlaylist saved={saved} callback={savePlaylistClick} />
                         </>
                     )
                 }
