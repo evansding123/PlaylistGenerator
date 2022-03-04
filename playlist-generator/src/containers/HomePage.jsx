@@ -39,6 +39,7 @@ export const HomePage = () => {
     }
 
     useEffect(() => {
+        // make it so button changes from save playlist to saved when we save a playlist to the account
         setTimeout(() => {
             setSaved(false);
         }, 3000);
@@ -59,6 +60,10 @@ export const HomePage = () => {
         response.json().then((data) => {
             const personId = data.artists !== undefined ? data.artists.items[0].id : '';
             setArtist(personId);
+        }).catch((err) => {
+            console.log(err);
+            // eslint-disable-next-line no-alert
+            alert('name not found!');
         });
 
         return response;
@@ -144,29 +149,23 @@ export const HomePage = () => {
     return (
         <div className="home-page">
             <div className="inputs">
-                <UserComp user={user} />
-                <Artist form="Enter Artist Name" callback={getArtist} />
-                <Features type="Energy" callback={getEnergy} />
-                <Features type="Dance" callback={getDance} />
-                <Features type="Acoustic" callback={getAcoustic} />
-                <PlaylistLength callback={getTime} />
-                <button
-                    className="button"
-                    type="button"
-                    onClick={onCreatePlaylistClick}
-                >
-                    Create Playlist
-                </button>
+                <div className="createInputs">
+                    <UserComp user={user} />
+                    <Artist form="Enter Artist Name" callback={getArtist} />
+                    <Features type="Energy" callback={getEnergy} />
+                    <Features type="Dance" callback={getDance} />
+                    <Features type="Acoustic" callback={getAcoustic} />
+                    <PlaylistLength callback={getTime} />
+                    <button
+                        className="button"
+                        type="button"
+                        onClick={onCreatePlaylistClick}
+                    >
+                        Create Playlist
+                    </button>
+                </div>
                 {/* if we get recommendations in state then this become true, giving us an option to save the playlist */}
-                {
-                    playlistTracks !== undefined && playlistTracks.length > 0
-                    && (
-                        <>
-                            <SavePlaylist saved={saved} callback={savePlaylistClick} />
-                        </>
-                    )
-                }
-
+                {playlistTracks !== undefined && playlistTracks.length > 0 && <SavePlaylist saved={saved} callback={savePlaylistClick} />}
                 <div>{playlistTracks === undefined && 'PLEASE CHOOSE ARTIST'}</div>
             </div>
             <div className="playlist">

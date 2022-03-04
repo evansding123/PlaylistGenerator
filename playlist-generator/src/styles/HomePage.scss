@@ -4,12 +4,24 @@
     flex-direction: row;
     align-items: flex-start;
 
+
     .inputs {
         margin-left: 0;
         margin-right: 8%;
         display: flex;
         flex-direction: column;
         align-items: center;
+
+        .createInputs {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border-style: solid;
+            background-color: grey;
+            padding: 1em;
+            border-radius: 25px;
+            width: 17em;
+        }
     }
 
     .user-info {
@@ -115,16 +127,17 @@
     .savePlaylist {
         border-style: solid;
         background-color: grey;
-        padding: 10px;
+        padding: 1em;
         border-radius: 25px;
         margin-top: 10%;
+        width: 17em;
 
         .spform {
             display: flex;
             flex-direction: column;
             input {
                 margin-top: 20px;
-                border-radius: 20px;
+                border-radius: 5px;
             }
         }
 
