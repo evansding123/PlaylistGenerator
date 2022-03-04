@@ -153,8 +153,8 @@ export const HomePage = () => {
                     <UserComp user={user} />
                     <Artist form="Enter Artist Name" callback={getArtist} />
                     <Features type="Energy" callback={getEnergy} />
-                    <Features type="Dance" callback={getDance} />
-                    <Features type="Acoustic" callback={getAcoustic} />
+                    <Features type="Danceability" callback={getDance} />
+                    <Features type="Acousticness" callback={getAcoustic} />
                     <PlaylistLength callback={getTime} />
                     <button
                         className="button"
@@ -166,7 +166,7 @@ export const HomePage = () => {
                 </div>
                 {/* if we get recommendations in state then this become true, giving us an option to save the playlist */}
                 {playlistTracks !== undefined && playlistTracks.length > 0 && <SavePlaylist saved={saved} callback={savePlaylistClick} />}
-                <div>{playlistTracks === undefined && 'PLEASE CHOOSE ARTIST'}</div>
+                {playlistTracks === undefined && <div className="savePlaylist">PLEASE CHOOSE ARTIST</div>}
             </div>
             <div className="playlist">
                 {/* if we get recommendations in state then this become true, rendering the playlist */}
