@@ -1,7 +1,8 @@
 .app {
     padding: 20px;
     background-color: #2b2d2f;
-    width: 150em;
+    min-width: 100vw;
+    min-height: 100vw;
 
     .error-message {
         color: #ff0000;

@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React, {
     useCallback, useContext, useState, useEffect,
 } from 'react';
@@ -11,15 +10,9 @@ import
 } from '../components';
 
 export const HomePage = () => {
-// create a state to hold all recommendation info in object form
-// need to get a list of queries: artists, genres, audio features, playing time
-// each one needs to be a seperate component each with local state that passes to this parent
-    // for artists, need a separate request that takes in artist name and returns ID
-// when button is clicked, send a request to spotify api with state as query
-
     const context = useContext(spotifyAppContext);
     const { user, token } = context;
-
+    // hooks to hold state for items we need to send to spotify API
     const [energy, setEnergy] = useState(0);
     const [dance, setDance] = useState(0);
     const [acoustic, setAcoustic] = useState(0);
@@ -60,7 +53,8 @@ export const HomePage = () => {
             const personId = data.artists !== undefined ? data.artists.items[0].id : '';
             setArtist(personId);
         }).catch((err) => {
-            console.log(err);
+            // eslint-disable-next-line no-console
+            console.log('error when finding artist', err);
             // eslint-disable-next-line no-alert
             alert('name not found!');
         });
@@ -85,6 +79,7 @@ export const HomePage = () => {
     };
 
     const onCreatePlaylistClick = useCallback(async () => {
+        // take the artist seed id along with all the hooks for features to get recommendations
         const seed = artist;
         const playListLimit = playTime >= 30 ? Math.ceil(Number(playTime) / 3.5) : 10;
         const url = `https://api.spotify.com/v1/recommendations?limit=${playListLimit}&seed_artists=${seed}&target_acousticness=${acoustic}&target_danceability=${dance}&target_energy=${energy}`;
@@ -98,12 +93,13 @@ export const HomePage = () => {
         });
         response.json().then((data) => {
             // eslint-disable-next-line no-console
-            console.log(data.tracks);
+            console.log('data from asking api for recomendations', data.tracks);
             setTracks(data.tracks);
         });
     }, [artist, playTime, acoustic, dance, energy]);
 
     const savePlaylistClick = async (playlistName, playlistDescription) => {
+        // use the id generated from creating playlist to add items to it
         const url = `https://api.spotify.com/v1/users/${user.id}/playlists`;
         const response = await fetch(url, {
             method: 'POST',
@@ -119,7 +115,6 @@ export const HomePage = () => {
             }),
         });
         response.json().then(async (data) => {
-            // use the id generated from creating playlist to add items to it
             // get list of track uris to add to playlist
             const listURIs = playlistTracks.map((item) => {
                 return item.uri;
@@ -137,10 +132,16 @@ export const HomePage = () => {
                 }),
             });
             response2.json().then((data2) => {
-                console.log(data, data2);
+                // eslint-disable-next-line no-console
+                console.log('data from response for creating playlist and adding songs into playlists', data, data2);
                 setSaved(true);
                 // eslint-disable-next-line no-alert
                 alert('saved!');
+            }).catch((err) => {
+                // eslint-disable-next-line no-console
+                console.log('error when saving playlist', err);
+                // eslint-disable-next-line no-alert
+                alert('playlist not saved!');
             });
         });
     };
@@ -150,7 +151,6 @@ export const HomePage = () => {
             <div className="inputs">
                 <UserComp user={user} />
                 <div className="createInputs">
-
                     <Artist form="Enter Artist Name" callback={getArtist} />
                     <Features type="Energy" callback={getEnergy} />
                     <Features type="Danceability" callback={getDance} />
