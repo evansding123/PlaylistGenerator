@@ -14,8 +14,8 @@ export const Features = (props) => {
 
     return (
         <div>
-            <label htmlFor={type}>
-                {type}
+            <label className="features" htmlFor={type}>
+                <div>{type}</div>
                 <input type="range" id="energy" name="energy" min="0" max="1" step="0.01" value={feature} onChange={getFeature} />
             </label>
         </div>

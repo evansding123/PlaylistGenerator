@@ -1,5 +1,4 @@
 /* eslint-disable no-console */
-/* eslint-disable no-unused-vars */
 import React, {
     useCallback, useContext, useState, useEffect,
 } from 'react';
@@ -87,7 +86,7 @@ export const HomePage = () => {
 
     const onCreatePlaylistClick = useCallback(async () => {
         const seed = artist;
-        const playListLimit = playTime >= 30 ? Math.ceil(Number(playTime) / 3) : 10;
+        const playListLimit = playTime >= 30 ? Math.ceil(Number(playTime) / 3.5) : 10;
         const url = `https://api.spotify.com/v1/recommendations?limit=${playListLimit}&seed_artists=${seed}&target_acousticness=${acoustic}&target_danceability=${dance}&target_energy=${energy}`;
 
         const response = await fetch(url, {
@@ -149,8 +148,9 @@ export const HomePage = () => {
     return (
         <div className="home-page">
             <div className="inputs">
+                <UserComp user={user} />
                 <div className="createInputs">
-                    <UserComp user={user} />
+
                     <Artist form="Enter Artist Name" callback={getArtist} />
                     <Features type="Energy" callback={getEnergy} />
                     <Features type="Danceability" callback={getDance} />
@@ -169,6 +169,15 @@ export const HomePage = () => {
                 {playlistTracks === undefined && <div className="savePlaylist">PLEASE CHOOSE ARTIST</div>}
             </div>
             <div className="playlist">
+                <div className="labels">
+                    <span className="empty"> </span>
+                    <div className="bothNames">
+                        <div className="Name">Title</div>
+                    </div>
+                    <div>Album</div>
+                    <div>Date</div>
+                    <div>Duration</div>
+                </div>
                 {/* if we get recommendations in state then this become true, rendering the playlist */}
                 {playlistTracks !== undefined && playlistTracks.length > 0 && playlistTracks.map((item) => {
                     return <Tracks description={item} key={item.id} />;

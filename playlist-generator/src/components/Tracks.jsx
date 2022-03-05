@@ -22,11 +22,11 @@ export const Tracks = (props) => {
 
             <div className="trackInfo">
                 <img className="thumbnail" src={album.images[0].url} alt="thumbnail" />
-                <div>
+                <div className="bothNames">
                     <div className="Name">{description.name}</div>
                     <div>{description.artists[0].name}</div>
                 </div>
-                <div className>{album.name}</div>
+                <div>{album.name}</div>
                 <div>{album.release_date}</div>
                 <div>{formatTime}</div>
             </div>

@@ -1,27 +1,24 @@
 
 .home-page {
-    padding: 10px;
+
     display: flex;
     flex-direction: row;
     align-items: flex-start;
     background-color: #2b2d2f;
     height: 90em;
-    width: 100em;
+    width: 150em;
 
     .inputs {
-        // margin-left: 0;
-        // margin-right: 8%;
+
         display: flex;
         flex-direction: column;
         align-items: center;
-        position: fixed;
+        color: white;
 
         .createInputs {
             display: flex;
             flex-direction: column;
-            align-items: center;
-            border-style: solid;
-            background-color: grey;
+            align-items: flex-start;
             padding: 1em;
             border-radius: 25px;
             width: 17em;
@@ -54,7 +51,7 @@
         color: #ffffff;
         padding: 10px 20px;
         border: none;
-        min-width: 200px;
+        min-width: 225px;
         cursor: pointer;
         text-align: center;
         font-weight: bold;
@@ -76,7 +73,6 @@
             padding: 5px 10px;
             border: none;
             min-width: 30px;
-            //max-width: 40px;
             cursor: pointer;
             text-align: center;
             font-weight: bold;
@@ -84,68 +80,108 @@
 
     }
 
+    .features {
+        display: flex;
+        flex-direction: column;
+        input {
+            flex-basis: 10px;
+        }
+    }
+
     .playlistLength {
         display: flex;
+        flex-direction: column;
         margin-top: 10px;
     }
 
+    .listLabel {
+        display: flex;
+        flex-direction: row;
+
+    }
 
 
+    .labels {
+        display: flex;
+        color: grey;
+        flex-direction: row;
+        align-items: center;
+        font-size: 12px;
+        justify-content: flex-start;
+        width: 650px;
+        .bothNames {
+            width: 400px;
+        }
+        .Name {
+            //font-weight: 800;
+            flex-basis: 50%;
+        }
+
+        .empty {
+            width: 90px;
+            margin-left: 7px;
+            margin-bottom: 5px;
+            padding-right: 5px;
+        }
+
+        div {
+            margin-left: 7px;
+            flex-basis: 200px;
+        }
+
+    }
 
 
     .playlist {
         display: flex;
         flex-direction: column;
         flex-wrap: wrap;
-        margin-left: 370px;
-        // margin-right: 0;
-
-        height: 90%;
-        //width: 30em;
-        //overflow: auto;
+        margin-left: 1%;
+        height: 100%;
     }
+
 
     .tracks {
         display: flex;
         flex-direction: column;
-        //flex-wrap: wrap;
-        // width: 50%;
-        // height: 7%;
-        //border-style: solid;
-        // border-radius: 20px;
-        // border-color:#1ed660;
-        color: white;
-        //background-color: gray;
-        //overflow: hide;
 
+        color: white;
+        :hover {
+            background-color: grey;
+        }
         .trackInfo {
             display: flex;
             flex-direction: row;
-            //flex-wrap: wrap;
             align-items: center;
             font-size: 12px;
             justify-content: flex-start;
+            width: 650px;
+            .bothNames {
+                width: 400px;
+            }
             .Name {
                 font-weight: 800;
+                flex-basis: 50%;
             }
 
             .thumbnail {
-                width: 0.01em;
-                height: 6em;
+                width: 75px;
+                height: 75px;
                 margin-bottom: 5px;
             }
 
-            img, div {
-                margin-left: 5px;
-                flex-basis: 25%;
+            div {
+                margin-left: 7px;
+                flex-basis: 200px;
             }
+
+
 
         }
     }
 
     .savePlaylist {
-        border-style: solid;
-        background-color: grey;
+
         padding: 1em;
         border-radius: 25px;
         margin-top: 10%;
@@ -155,8 +191,8 @@
             display: flex;
             flex-direction: column;
             input {
-                margin-top: 20px;
-                border-radius: 5px;
+                margin-top: 15px;
+
             }
         }
 
