@@ -42,7 +42,7 @@ node_modules/
 jspm_packages/
 package-lock.json
 src/utils/clientID.js
-playlist-generator/src/utils/clientID.js
+src/utils/id.env
 
 # TypeScript v1 declaration files
 typings/
