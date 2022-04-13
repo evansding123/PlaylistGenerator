@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 
-import id from './clientID.js';
+import id from './id.env';
 
 /**
  * You must create a Spotify App here https://developer.spotify.com/dashboard/applications and replace this CLIENT_ID with your App's CLIENT_ID.
